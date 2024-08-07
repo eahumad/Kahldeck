@@ -1,0 +1,31 @@
+{
+    "iconPacks": [
+        {
+            "uuid": "temp",
+            "name": "SimRacing",
+            "version": "1.0",
+            "icons": [
+                {
+                    "uuid": "temp",
+                    "name": "Highlight",
+                    "fileName": "highlight.png"
+                },
+                {
+                    "uuid": "temp",
+                    "name": "Hazard",
+                    "fileName": "hazard.png"
+                },
+                {
+                    "uuid": "temp",
+                    "name": "TC+",
+                    "fileName": "tc+.png"
+                },
+                {
+                    "uuid": "temp",
+                    "name": "TC-",
+                    "fileName": "tc-.png"
+                }
+            ]
+        }
+    ]
+}
