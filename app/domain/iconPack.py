@@ -34,11 +34,15 @@ class IconPack:
             "icons": [icon.to_dict() for icon in self.icons]
         }
     
-    def from_dict(self, data):
-        self.uuid = data["uuid"]
-        self.name = data["name"]
-        self.version = data["version"]
-        self.min_kahl_version = data["min_kahl_version"]
-        self.author = data["author"]
-        self.description = data["description"]
-        self.icons = [Icon._from_dict(icon) for icon in data["icons"]]
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            name=data["name"],
+            version=data["version"],
+            icons=[Icon.from_dict(icon) for icon in data["icons"]],
+            uuid=data["uuid"],
+            min_kahl_version=data["min_kahl_version"],
+            author=data["author"],
+            description=data["description"]
+        )
+        

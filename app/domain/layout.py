@@ -28,10 +28,12 @@ class Layout:
             "buttons": [button.to_dict() for button in self.buttons]
         }
         
-    def from_dict(self, data):
-        self.uuid = data["uuid"]
-        self.name = data["name"]
-        self.rows = data["rows"]
-        self.columns = data["columns"]
-        self.buttons = [Button.from_dict(button) for button in data["buttons"]]
-        return self
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            name=data["name"],
+            rows=data["rows"],
+            columns=data["columns"],
+            buttons=[Button.from_dict(button) for button in data["buttons"]],
+            uuid=data["uuid"]
+        )

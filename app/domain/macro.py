@@ -25,9 +25,10 @@ class Macro:
             "keys": self.keys
         }
     
-    def from_dict(self, data):
-        self.uuid = data["uuid"]
-        self.name = data["name"]
-        self.type = data["type"]
-        self.keys = data["keys"]
-        return self
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            name=data["name"],
+            keys=data["keys"],
+            uuid=data["uuid"]
+        )

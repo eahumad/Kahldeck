@@ -2,6 +2,7 @@ from flata import where
 from app.db.flata_connector import FlataConnector
 from app.domain.iconPack import IconPack
 from app.repository.base_repository import BaseRepository
+from app.repository.filter import Filter
 
 
 class IconPackRepository(BaseRepository):
@@ -32,3 +33,10 @@ class IconPackRepository(BaseRepository):
         result = self._table.all()
         self.close()
         return result
+    
+    def update_icon_pack(self, icon_pack: IconPack):
+        self.open()
+        response = self._table.update( fields=icon_pack.to_dict(), cond=where('uuid') == icon_pack.uuid)
+        self.close()
+        return True
+        

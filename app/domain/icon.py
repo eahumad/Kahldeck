@@ -26,8 +26,12 @@ class Icon:
             "tags": self.tags
         }
     
-    def from_dict(self, data):
-        self.uuid = data["uuid"]
-        self.name = data["name"]
-        self.file = data["file"]
-        self.tags = data["tags"]
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            name=data["name"],
+            file=data["file"],
+            tags=data["tags"],
+            uuid=data["uuid"]
+        )
+        

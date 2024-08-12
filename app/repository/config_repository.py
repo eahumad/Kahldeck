@@ -8,7 +8,7 @@ class ConfigRepository(BaseRepository):
     
     
     def __init__(self):
-        super().__init__('config', FlataConnector('config'))
+        super().__init__('config', FlataConnector('config'), None)
         
         
     def add_config(self, config: dict):

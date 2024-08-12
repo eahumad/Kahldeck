@@ -27,9 +27,11 @@ class Button:
             "macro": self.macro.to_dict()
         }
         
-    def from_dict(self, data):
-        self.uuid = data["uuid"]
-        self.name = data["name"]
-        self.icon = Icon.from_dict(data["icon"])
-        self.macro = Macro.from_dict(data["macro"])
-        return self
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            name=data["name"],
+            icon=Icon.from_dict(data["icon"]),
+            macro=Macro.from_dict(data["macro"]),
+            uuid=data["uuid"]
+        )

@@ -19,7 +19,7 @@ class LayoutRepository(BaseRepository):
         self.open()
         result =  self._table.search(where(key) == value)
         self.close()
-        return result[0] if result else None
+        return  Layout.from_dict(result[0]) if result else None
     
     def remove_layout(self, key: str, value):
         self.open()
@@ -32,3 +32,9 @@ class LayoutRepository(BaseRepository):
         result = self._table.all()
         self.close()
         return result
+    
+    def update_layout(self, layout: Layout):
+        self.open()
+        response = self._table.update( fields=layout.to_dict(), cond=where('uuid') == layout.uuid)
+        self.close()
+        return True

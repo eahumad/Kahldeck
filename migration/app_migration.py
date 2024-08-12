@@ -81,8 +81,8 @@ class AppMigration(IMigration):
             Button(name="indent", icon=self._icons[8], macro=Macro(name="indent", uuid=None, keys=["ctrl", "i"]), uuid=None)
         ]
         
-        layout = Layout(name="default_layout", rows=1, columns=9, buttons=buttons, uuid=None)
-        self._layout_provider.add_layout(layout)
+        layout = Layout(name="default_layout", rows=2, columns=9, buttons=buttons, uuid=None)
+        self._layout_provider.add_layout(layout, True)
 
         
         
