@@ -15,13 +15,13 @@ class LayoutProvider:
         if existed_layout is not None and updateOnDuplicate :
             # if exist update
             layout.uuid = existed_layout.uuid
-            self._layout_repository.update_layout(layout)
+            return self._layout_repository.update_layout(layout)
         elif existed_layout is not None and not updateOnDuplicate:
             # if exist and updateOnDuplicate is false, do nothing
-            pass
+            return True
         else:
             # if not exist, add
-            self._layout_repository.add_layout(layout)
+            return self._layout_repository.add_layout(layout)
     
     def get_layout(self, key: str, value: str):
         return self._layout_repository.get_layout(key, value)
@@ -31,3 +31,6 @@ class LayoutProvider:
     
     def get_all_layouts(self):
         self._layout_repository.get_all_layouts()
+        
+    def update_layout(self, layout):
+        return self._layout_repository.update_layout(layout)
