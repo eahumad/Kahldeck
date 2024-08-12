@@ -18,3 +18,18 @@ class Button:
             self.uuid = str(uuid4())
         else:
             self.uuid = uuid
+    
+    def to_dict(self):
+        return {
+            "uuid": self.uuid,
+            "name": self.name,
+            "icon": self.icon.to_dict(),
+            "macro": self.macro.to_dict()
+        }
+        
+    def from_dict(self, data):
+        self.uuid = data["uuid"]
+        self.name = data["name"]
+        self.icon = Icon.from_dict(data["icon"])
+        self.macro = Macro.from_dict(data["macro"])
+        return self

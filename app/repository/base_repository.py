@@ -18,4 +18,3 @@ class BaseRepository(IRepository):
         
     def close(self):
         self._connector.disconnect()
-        

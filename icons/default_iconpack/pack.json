@@ -1,0 +1,65 @@
+{
+    "name": "My Icon Pack",
+    "author": "Eahumada",
+    "version": "1.0",
+    "min_kahl_version": "1.0.0",
+    "description": "My Icon Pack",
+    "icons": [
+        {
+            "name": "copy",
+            "tags": ["clipboard", "copy", "paste"],
+            "file": "content-copy.svg"
+        },
+        {
+            "name": "paste",
+            "tags": ["clipboard", "copy", "paste"],
+            "file": "copy.svg"
+        },
+        {
+            "name": "stop",
+            "tags": ["stop", "media", "player"],
+            "file": "media-stop.svg"
+        },
+        {
+            "name": "play",
+            "tags": ["play", "media", "player", "run", "music", "start", "video"],
+            "file": "play.svg"
+        },
+        {
+            "name": "scissors",
+            "tags": ["scissors", "cut", "copy", "paste"],
+            "file": "scissors.svg"
+        },
+        {
+            "name": "next",
+            "tags": ["next", "media", "player", "music", "video"],
+            "file": "skip-next.svg"
+        },
+        {
+            "name": "sync",
+            "tags": ["sync", "reload", "refresh", "update", "download", "upload"],
+            "file": "sync.svg"
+        },
+        {
+            "name": "terminal",
+            "tags": ["terminal", "command", "prompt", "shell"],
+            "file": "terminal.svg"
+        },
+        {
+            "name": "indent",
+            "tags": ["indent", "text", "left", "right"],
+            "file": "text-indent-left.svg"
+        }
+    ]
+}
+
+
+terminal.svg
+skip-next.svg
+text-indent-left.svg
+sync.svg
+media-stop.svg
+play.svg
+scissors.svg
+copy.svg
+content-copy.svg
