@@ -1,0 +1,19 @@
+aside {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.layout-list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.layout-list Button {
+    margin-top: 10px;
+}
+
+.create-layout {
+    padding-bottom: 10px;
+}
