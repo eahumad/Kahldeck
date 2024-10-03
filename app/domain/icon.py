@@ -27,6 +27,10 @@ class Icon:
         }
     
     @classmethod
+    def empty(cls):
+        return cls(name='Empty', file='empty.png', tags=['empty'], uuid=None)
+    
+    @classmethod
     def from_dict(cls, data):
         return cls(
             name=data["name"],

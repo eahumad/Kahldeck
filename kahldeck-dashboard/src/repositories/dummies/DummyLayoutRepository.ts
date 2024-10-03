@@ -1,5 +1,6 @@
 import LayoutRepositoryInterface from '../LayoutRepositoryInterface';
 import { Layout } from '../../domain/Layout';
+import { Macro } from '../../domain/Macro';
 
 
 export default class DummyLayoutRepository implements LayoutRepositoryInterface {
@@ -10,6 +11,9 @@ export default class DummyLayoutRepository implements LayoutRepositoryInterface 
             //LayoutFactory.createLayout('Layout 1', 2, 2, []),
             //LayoutFactory.createLayout('Layout 2', 3, 8, []),
         ]
+    }
+    searchMacros(text: string): Promise<Macro[]> {
+        throw new Error('Method not implemented.');
     }
 
 
@@ -22,8 +26,9 @@ export default class DummyLayoutRepository implements LayoutRepositoryInterface 
         this._layouts = [...this._layouts, layout]
     }
 
-    async removeLayout(uuid: string): Promise<void> {
+    async removeLayout(uuid: string): Promise<unknown> {
         this._layouts = this._layouts.filter(layout => layout.uuid !== uuid)
+        return uuid
     }
 
     async updateLayout(layout: Layout): Promise<void> {

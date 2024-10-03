@@ -6,17 +6,18 @@ import Search from "antd/es/input/Search"
 
 import { useAppDispatch, useAppSelector } from "../../stores/hooks";
 import { Layout } from '../../domain/Layout';
-import {  createNewLayout, filterLayouts,  setLayouts } from './layoutListSlice';
+import { createNewLayout, filterLayouts, setLayouts } from './layoutListSlice';
 import { useEffect } from "react";
-import { addLayout, fetchLayouts, selectLayoutToSelect, viewThisLayout } from "../../stores/layout_slice";
+import { addLayout, fetchLayouts, selectLayoutToSelect, unselectButton, viewThisLayout } from "../../stores/layout_slice";
 import LayoutToSelect from "../../enums/LayoutToSelect";
+import { getAllMacros } from "../../stores/macro_slice";
 
 const LayoutList = (props: { id: string }) => {
   const { id } = props
   const layouts: Layout[] = useAppSelector(state => state.layoutReduce.layouts)
   const selectedLayout: Layout = useAppSelector(state => state.layoutReduce.selectedLayout)
   const filteredLayouts: Layout[] = useAppSelector(state => state.layoutReduce.layouts)
-  
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -28,34 +29,36 @@ const LayoutList = (props: { id: string }) => {
     dispatch(filterLayouts(value))
   }
 
-  
+
   const loadLayouts = async () => {
     await dispatch(fetchLayouts());  // Despachar la acción para cargar los layouts
     await dispatch(setLayouts(layouts));  // asignar layouts filtrados
     await dispatch(selectLayoutToSelect(LayoutToSelect.First))
 
-    
+
   }
-  
+
 
   const onCreateLayout = () => {
     const newLayout = createNewLayout()
-    
+
     dispatch(addLayout(newLayout)).then(async () => {
       await loadLayouts()
+      dispatch(unselectButton())
       dispatch(selectLayoutToSelect(LayoutToSelect.Last))
     })
-    
+
   }
 
   const onSelectLayout = (layout: Layout) => {
+    dispatch(unselectButton())
     dispatch(viewThisLayout(layout))
   }
 
 
   return (
     <>
-      <aside  id={id}>
+      <aside id={id}>
         <div className="search-bar">
           <Search
             placeholder="input search text"
@@ -91,7 +94,7 @@ const LayoutList = (props: { id: string }) => {
           })}
         </div>
         <div className="create-layout">
-          <Button type="primary" size="large" onClick={onCreateLayout}>
+          <Button size="large" onClick={onCreateLayout}>
             {t("layout_list.create_layout")}
           </Button>
         </div>

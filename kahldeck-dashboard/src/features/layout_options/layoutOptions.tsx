@@ -1,10 +1,11 @@
-import { t  } from "i18next"
-import { Breadcrumb, Button as AButton, Form, Input, InputNumber } from 'antd';
+import { t } from "i18next"
+import { Breadcrumb, Button as AButton, Form, Input, InputNumber, Flex, Modal } from 'antd';
 import { Layout } from "../../domain/Layout";
 import "./layoutOptions.css"
 import { useAppDispatch, useAppSelector } from "../../stores/hooks";
-import { updateLayout, viewThisLayout } from "../../stores/layout_slice";
+import { removeLayout, updateLayout, viewThisLayout } from "../../stores/layout_slice";
 import { useEffect } from "react";
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 
 
@@ -12,6 +13,7 @@ import { useEffect } from "react";
 const LayoutOptions = () => {
   const dispatch = useAppDispatch()
   const [form] = Form.useForm()
+  const { confirm } = Modal;
 
   const selectedLayout: Layout = useAppSelector(state => state.layoutReduce.selectedLayout)
 
@@ -28,9 +30,27 @@ const LayoutOptions = () => {
     dispatch(viewThisLayout(newLayout))
   }
 
+  const onDelete = () => {
+    confirm({
+      title: t("layout_options.delete.title"),
+      icon: <ExclamationCircleFilled />,
+      content: t("layout_options.delete.content"),
+      okText: t("confirm"),
+      cancelText: t("cancel"),
+      okType: 'danger',
+      onOk() {
+        dispatch(removeLayout(selectedLayout.uuid))
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+    
+  }
+
   useEffect(() => {
     form.setFieldsValue(selectedLayout)
-  }, [selectedLayout])
+  }, [form, selectedLayout])
 
 
   return (
@@ -71,10 +91,15 @@ const LayoutOptions = () => {
           <InputNumber />
         </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <AButton type="primary" htmlType="submit">
-            {t("save")}
-          </AButton>
+        <Form.Item >
+          <Flex justify="space-between" align="center">
+            <AButton type="primary" htmlType="submit">
+              {t("save")}
+            </AButton>
+            <AButton onClick={onDelete} danger>
+              {t("delete")}
+            </AButton>
+          </Flex>
         </Form.Item>
       </Form>
 

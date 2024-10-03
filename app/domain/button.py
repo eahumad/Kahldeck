@@ -18,6 +18,10 @@ class Button:
             self.uuid = str(uuid4())
         else:
             self.uuid = uuid
+            
+    @classmethod
+    def empty(cls):
+        return cls(name='Empty', icon=Icon.empty(), macro=Macro.empty(), uuid=None)
     
     def to_dict(self):
         return {

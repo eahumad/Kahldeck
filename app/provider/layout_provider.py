@@ -1,3 +1,4 @@
+from app.domain.button import Button
 from app.domain.layout import Layout
 from app.repository.layout_repository import LayoutRepository
 
@@ -17,9 +18,23 @@ class LayoutProvider:
     
     def remove_layout(self, key: str, value):
         self._layout_repository.remove_layout(key, value)
+        return True
     
     def get_all_layouts(self):
         return self._layout_repository.get_all_layouts()
         
     def update_layout(self, layout):
+        layout = self._recalculate_layout_buttons(layout)
         return self._layout_repository.update_layout(layout)
+    
+    # remove exceded buttons or create new empty buttons
+    def _recalculate_layout_buttons(self, layout: Layout):
+        max_buttons = layout.rows * layout.columns
+        if len(layout.buttons) > max_buttons:
+            layout.buttons = layout.buttons[:max_buttons]
+        elif len(layout.buttons) < max_buttons:
+            for i in range(len(layout.buttons), max_buttons):
+                layout.buttons.append(Button.empty())
+        return layout
+        
+        

@@ -1,7 +1,6 @@
 import LayoutRepositoryInterface from '../repositories/LayoutRepositoryInterface';
 import { Layout } from '../domain/Layout';
 import EelLayoutRepository from '../repositories/EelLayoutRepository';
-import DummyLayoutRepository from '../repositories/dummies/DummyLayoutRepository';
 
 
 export default class LayoutProvider {
@@ -10,11 +9,11 @@ export default class LayoutProvider {
 
 
     public constructor() {
-        if( import.meta.env.PROD ) {
-            this.layoutRepository = new EelLayoutRepository();
-        } else {
-            this.layoutRepository = new DummyLayoutRepository();
-        }
+        // if( import.meta.env.PROD ) {
+        //     this.layoutRepository = new EelLayoutRepository();
+        // } else {
+        //     this.layoutRepository = new DummyLayoutRepository();
+        // }
         this.layoutRepository = new EelLayoutRepository();
     }
 
@@ -31,19 +30,24 @@ export default class LayoutProvider {
         return this.layoutRepository.getLayouts();
     }
 
+    async getLayout(uuid: string): Promise<Layout> {
+        return await this.layoutRepository.getLayout(uuid);
+    }
+
     async addLayout(layout: Layout): Promise<Layout> {
         await this.layoutRepository.addLayout(layout);
         return layout;
     }
 
-    async removeLayout(uuid: string): Promise<void> {
-        await this.layoutRepository.removeLayout(uuid);
+    async removeLayout(uuid: string): Promise<string> {
+        return await this.layoutRepository.removeLayout(uuid);
     }
     
     async updateLayout(layout: Layout): Promise<Layout> {
         console.log('call updateLayout on provider');
         await this.layoutRepository.updateLayout(layout);
-        return layout;
+        const updatedLayout = await this.layoutRepository.getLayout(layout.uuid);
+        return updatedLayout;
     }
 
     async dummy(text: string): Promise<string> {

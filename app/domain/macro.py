@@ -24,6 +24,10 @@ class Macro:
             "type": self.type,
             "keys": self.keys
         }
+        
+    @classmethod
+    def empty(cls):
+        return cls(name='Empty', keys=['Empty'], uuid=None)
     
     @classmethod
     def from_dict(cls, data):

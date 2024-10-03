@@ -13,7 +13,7 @@ export class Macro {
         this.uuid = uuid || uuidv4();
     }
 
-    toJSON(): Record<string, any> {
+    toJSON(): Record<string, unknown> {
         return {
             uuid: this.uuid,
             name: this.name,
@@ -22,7 +22,10 @@ export class Macro {
         };
     }
 
-    static fromJSON(data: Record<string, any>): Macro {
+    static fromJSON(data: Record<string, never>): Macro {
+        if(data.name === undefined || data.keys === undefined) {
+            throw new Error('Invalid macro');
+        }
         return new Macro(
             data.name,
             data.keys,

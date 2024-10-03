@@ -4,7 +4,9 @@ import { Layout } from '../domain/Layout';
 import LayoutProvider from '../providers/LayoutProvider'
 import LayoutToSelect from '../enums/LayoutToSelect';
 
+
 const layoutProvider = new LayoutProvider()
+
 
 export interface LayoutSliceState {
   layouts: Layout[]
@@ -26,6 +28,9 @@ export const fetchLayouts = createAsyncThunk('layoutList/fetchLayouts', async ()
   const layouts = await layoutProvider.getLayouts()
   return layouts
 })
+
+
+
 
 export const updateLayout = createAsyncThunk<Layout, Layout, { rejectValue: string }>(
   'layoutList/updateLayout',
@@ -51,15 +56,24 @@ export const addLayout = createAsyncThunk<Layout, Layout, { rejectValue: string 
   }
 );
 
+export const removeLayout = createAsyncThunk<string, string, { rejectValue: string }>( 
+  'layoutList/removeLayout',
+  async (uuid: string, { rejectWithValue }) => {
+    try{
+      const result = await layoutProvider.removeLayout(uuid);
+      return result;
+    } catch(error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'An unknown error occurred');
+    }
+  } 
+)
+    
 export const layoutSlice = createSlice({
   name: 'layout',
 
   initialState,
   reducers: {
 
-    removeLayout: (state, action) => {
-      state.layouts = state.layouts.filter(layout => layout.uuid !== action.payload)
-    },
     viewThisLayout: (state, action) => {
       state.selectedLayout = action.payload
     },
@@ -104,7 +118,7 @@ export const layoutSlice = createSlice({
         if (updatedLayoutIndex !== -1) {
           state.layouts[updatedLayoutIndex] = action.payload
           if (state.selectedLayout.uuid === action.payload.uuid) {
-            state.selectedLayout = action.payload
+            state.selectedLayout = state.layouts[updatedLayoutIndex]
           }
         }
         state.loading = false
@@ -126,11 +140,26 @@ export const layoutSlice = createSlice({
         state.loading = false
         state.error = action.payload as string || 'Failed to add layout'
       })
+
+      .addCase(removeLayout.pending, (state) => {
+        state.loading = true
+        state.error = undefined
+      })
+      .addCase(removeLayout.fulfilled, (state, action) => {
+        const removedLayoutIndex = state.layouts.findIndex(layout => layout.uuid === action.payload)
+        if (removedLayoutIndex !== -1) {
+          state.layouts.splice(removedLayoutIndex, 1)
+          if (action.payload) {
+            state.selectedLayout = state.layouts[removedLayoutIndex - 1]
+          }
+        }
+      })
+
   },
 })
 
 
-export const { removeLayout, viewThisLayout, selectButton, unselectButton, selectLayoutToSelect } = layoutSlice.actions
+export const {  viewThisLayout, selectButton, unselectButton, selectLayoutToSelect } = layoutSlice.actions
 export const selectLayouts = (state: LayoutSliceState) => state.layouts
 export const selectSelectedLayout = (state: LayoutSliceState) => state.selectedLayout
 export const selectSelectedButton = (state: LayoutSliceState) => state.selectedButton

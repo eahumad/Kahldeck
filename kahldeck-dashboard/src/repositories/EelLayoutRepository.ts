@@ -16,9 +16,9 @@ export default class EelLayoutRepository implements LayoutRepositoryInterface {
         await this._eel.add_layout(layout)();
     }
 
-    async removeLayout(uuid: string): Promise<void> {
-        // TODO: implementar
-        console.log('Uuid', uuid);
+    async removeLayout(uuid: string): Promise<string> {
+        await this._eel.remove_layout(uuid)();
+        return uuid;
     }
 
     async updateLayout(layout: Layout): Promise<void> {
@@ -28,10 +28,11 @@ export default class EelLayoutRepository implements LayoutRepositoryInterface {
     }
 
     async getLayout(uuid: string): Promise<Layout> {
-        // TODO: implementar
-        console.log('Uuid', uuid);
-        throw new Error('Method not implemented.');
+        const layout = await this._eel.get_layout(uuid)();
+        return layout;
     }
+
+
 
     async dummy(text: string): Promise<string> {
         return await this._eel.show_dummy(text)();

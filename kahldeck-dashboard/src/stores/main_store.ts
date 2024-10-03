@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import layoutListReducer  from '../features/layout_list/layoutListSlice' 
 import layoutReducer from './layout_slice';
+import macroReducer from './macro_slice';
 
 const store = configureStore({
   reducer: {
     layoutReduce: layoutReducer,
     layoutList: layoutListReducer,
+    macroReducer: macroReducer,
     // layoutView: layoutViewReducer,
     // kahlButton: kahlButtonReducer,
   },

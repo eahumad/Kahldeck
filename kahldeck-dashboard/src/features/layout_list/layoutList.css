@@ -4,10 +4,13 @@ aside {
     padding: 5px;
 }
 
+
 .layout-list {
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow-y: auto;
+    padding: 5px;
 }
 
 .layout-list Button {
@@ -16,4 +19,8 @@ aside {
 
 .create-layout {
     padding-bottom: 10px;
+}
+
+.create-layout Button {
+    width: 100%;
 }
