@@ -12,8 +12,12 @@ export default class DummyLayoutRepository implements LayoutRepositoryInterface 
             //LayoutFactory.createLayout('Layout 2', 3, 8, []),
         ]
     }
+    getLayout(uuid: string): Promise<Layout> {
+        throw new Error('Method not implemented.' + uuid);
+    }
+
     searchMacros(text: string): Promise<Macro[]> {
-        throw new Error('Method not implemented.');
+        throw new Error('Method not implemented.' + text);
     }
 
 
@@ -26,7 +30,7 @@ export default class DummyLayoutRepository implements LayoutRepositoryInterface 
         this._layouts = [...this._layouts, layout]
     }
 
-    async removeLayout(uuid: string): Promise<unknown> {
+    async removeLayout(uuid: string): Promise<string> {
         this._layouts = this._layouts.filter(layout => layout.uuid !== uuid)
         return uuid
     }

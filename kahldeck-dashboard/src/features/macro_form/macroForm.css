@@ -1,0 +1,64 @@
+
+#macro {
+    --margin: 10px;
+    --padding: 10px;
+    --width: 70px;
+    --height: 70px;
+}
+
+#macro-box {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    width: 100%;
+    border: 1px solid #ccc;
+    min-height: calc(var(--height) + var(--margin) * 2);
+}
+
+#keys {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.key {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: var(--height);
+    width: var(--width);
+    padding: var(--padding);
+    margin: var(--margin);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #fff;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.15s ease;
+}
+
+.key:hover,
+.key:focus {
+    transform: translateY(2px);
+    box-shadow: 0 0 1px #888, 0 1px 0 #fff, 0 4px 0 #C0C0C0, 0 2px 35px rgba(#444, 0.3), 2px 2px 4px rgba(#444, 0.25), -2px 2px 4px rgba(#444, 0.25), 0 7px 4px rgba(#444, 0.1);
+}
+
+.key:active {
+    box-shadow: 0 0 1px #888, 0 1px 0 #fff, 0 0 0 #C0C0C0, 0 0px 30px rgba(#444, 0.15), 2px 2px 4px rgba(#444, 0.25), -2px 2px 4px rgba(#444, 0.25), 0 0px 4px rgba(#444, 0.25);
+    transform: translateY(4px);
+}
+
+.key.width-2 {
+    width: calc(var(--width) * 2 + var(--margin) * 4);
+}
+
+.macro-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+}

@@ -83,6 +83,12 @@ export const layoutSlice = createSlice({
     unselectButton: (state) => {
       state.selectedButton = undefined as unknown as Button
     },
+    updateButton: (state, action) => {
+      const updatedButtonIndex = state.selectedLayout.buttons.findIndex(button => button.uuid === action.payload.uuid)
+      if (updatedButtonIndex !== -1) {
+        state.selectedLayout.buttons[updatedButtonIndex] = action.payload
+      }
+    },
     selectLayoutToSelect: (state, action) => {
       if (action.payload === LayoutToSelect.Last) {
         state.selectedLayout = state.layouts[state.layouts.length - 1]
@@ -159,7 +165,7 @@ export const layoutSlice = createSlice({
 })
 
 
-export const {  viewThisLayout, selectButton, unselectButton, selectLayoutToSelect } = layoutSlice.actions
+export const {  viewThisLayout, selectButton, unselectButton, updateButton, selectLayoutToSelect } = layoutSlice.actions
 export const selectLayouts = (state: LayoutSliceState) => state.layouts
 export const selectSelectedLayout = (state: LayoutSliceState) => state.selectedLayout
 export const selectSelectedButton = (state: LayoutSliceState) => state.selectedButton

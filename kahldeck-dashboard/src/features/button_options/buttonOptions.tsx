@@ -1,13 +1,12 @@
 
-import { Breadcrumb, Form, Input, Button as AButton,   Flex,  Modal, Select, SelectProps } from 'antd';
+import { Breadcrumb, Form, Input, Button as AButton, Flex, Modal, Select, SelectProps } from 'antd';
 import { Layout } from "../../domain/Layout";
 import { useAppDispatch, useAppSelector } from "../../stores/hooks";
 import { Button } from '../../domain/Button';
-import { unselectButton } from '../../stores/layout_slice';
+import { unselectButton, updateButton, updateLayout } from '../../stores/layout_slice';
 import { t } from 'i18next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MacroForm from '../macro_form/macroForm';
-
 
 
 
@@ -19,23 +18,29 @@ const ButtonOptions = () => {
     const [form] = Form.useForm()
     const [isModalMacroOpen, setIsModalMacroOpen] = useState(false);
     const newMacroKey = "addNewMacro"
-    
 
+    useEffect(() => {
+        // Esto actualiza los valores del formulario cuando selectedButton cambia
+        if (selectedButton) {
+            form.setFieldsValue(selectedButton);
+        }
+    }, [selectedButton, form]);
 
     const onBack = () => {
+        form.resetFields()
         dispatch(unselectButton())
     }
 
     const onSubmit = (values: Button) => {
-        console.log('onSubmit', values);
         const newButton = new Button(
             values.name,
             values.icon,
             values.macro,
             selectedButton.uuid
         )
-        //dispatch(updateButton(newButton))
-        dispatch(unselectButton())
+        dispatch(updateButton(newButton))
+        dispatch(updateLayout(selectedLayout))
+        onBack()
     }
 
 
